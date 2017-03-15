@@ -10,4 +10,5 @@ Use CTCoretext draw content
 > (LXCoretextDataManager *)parserAttributString:(NSAttributedString *)content withConfig:(LXFrameParsesConfig *)config
 
 #运行结果
+
 ![image](https://github.com/liuxinxiaoyue/LXCoretextDemo/blob/master/ScreenShoot/1.png)

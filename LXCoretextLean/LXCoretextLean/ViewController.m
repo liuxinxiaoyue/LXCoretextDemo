@@ -38,9 +38,9 @@
     index += t1.text.length;
     
     LXImageContent *t2 = [[LXImageContent alloc] init];
-    t2.imageName = @"coretext-image-1.jpg";
+    t2.imageName = @"a.jpg";
     t2.width = 200;
-    t2.height = 108.5;
+    t2.height = 150;
     t2.range = NSMakeRange(index, 1);
     t2.contentType = LXContentTypeImage;
     index += 1;
