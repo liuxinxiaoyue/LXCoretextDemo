@@ -18,7 +18,6 @@
 		244BD9B71E72404A00AA3ACD /* LXTextContent.m in Sources */ = {isa = PBXBuildFile; fileRef = 244BD9B41E72404A00AA3ACD /* LXTextContent.m */; };
 		244BD9BA1E7242B300AA3ACD /* LXDealEventManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 244BD9B91E7242B300AA3ACD /* LXDealEventManager.m */; };
 		244BD9BD1E726F9400AA3ACD /* LXLinkContent.m in Sources */ = {isa = PBXBuildFile; fileRef = 244BD9BC1E726F9400AA3ACD /* LXLinkContent.m */; };
-		244BD9C21E72AE5B00AA3ACD /* LXTestView.m in Sources */ = {isa = PBXBuildFile; fileRef = 244BD9C11E72AE5B00AA3ACD /* LXTestView.m */; };
 		245BCADC1E6FA1C500D23B28 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 245BCADB1E6FA1C500D23B28 /* main.m */; };
 		245BCADF1E6FA1C500D23B28 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 245BCADE1E6FA1C500D23B28 /* AppDelegate.m */; };
 		245BCAE21E6FA1C500D23B28 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 245BCAE11E6FA1C500D23B28 /* ViewController.m */; };
@@ -28,6 +27,7 @@
 		245BCAF51E6FA1C500D23B28 /* LXCoretextLeanTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 245BCAF41E6FA1C500D23B28 /* LXCoretextLeanTests.m */; };
 		245BCB001E6FA1C500D23B28 /* LXCoretextLeanUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 245BCAFF1E6FA1C500D23B28 /* LXCoretextLeanUITests.m */; };
 		245BCB0F1E6FA20300D23B28 /* LXDisplayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 245BCB0E1E6FA20300D23B28 /* LXDisplayView.m */; };
+		245BCFEC1E7931EB001134F0 /* LXCalculateRectUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 245BCFEB1E7931EB001134F0 /* LXCalculateRectUtils.m */; };
 		246FB1401E7783F700135B2A /* UIView+LXExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 246FB13F1E7783F700135B2A /* UIView+LXExtension.m */; };
 		249794B51E762FB900E63401 /* 002@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 249794B41E762FB900E63401 /* 002@2x.png */; };
 		249794B71E763C5700E63401 /* face25.png in Resources */ = {isa = PBXBuildFile; fileRef = 249794B61E763C5700E63401 /* face25.png */; };
@@ -71,8 +71,6 @@
 		244BD9B91E7242B300AA3ACD /* LXDealEventManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXDealEventManager.m; sourceTree = "<group>"; };
 		244BD9BB1E726F9400AA3ACD /* LXLinkContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXLinkContent.h; sourceTree = "<group>"; };
 		244BD9BC1E726F9400AA3ACD /* LXLinkContent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXLinkContent.m; sourceTree = "<group>"; };
-		244BD9C01E72AE5B00AA3ACD /* LXTestView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXTestView.h; sourceTree = "<group>"; };
-		244BD9C11E72AE5B00AA3ACD /* LXTestView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXTestView.m; sourceTree = "<group>"; };
 		245BCAD71E6FA1C500D23B28 /* LXCoretextLean.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LXCoretextLean.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		245BCADB1E6FA1C500D23B28 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		245BCADD1E6FA1C500D23B28 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -91,6 +89,8 @@
 		245BCB011E6FA1C500D23B28 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		245BCB0D1E6FA20300D23B28 /* LXDisplayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXDisplayView.h; sourceTree = "<group>"; };
 		245BCB0E1E6FA20300D23B28 /* LXDisplayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXDisplayView.m; sourceTree = "<group>"; };
+		245BCFEA1E7931EB001134F0 /* LXCalculateRectUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXCalculateRectUtils.h; sourceTree = "<group>"; };
+		245BCFEB1E7931EB001134F0 /* LXCalculateRectUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXCalculateRectUtils.m; sourceTree = "<group>"; };
 		246FB13E1E7783F700135B2A /* UIView+LXExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+LXExtension.h"; sourceTree = "<group>"; };
 		246FB13F1E7783F700135B2A /* UIView+LXExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+LXExtension.m"; sourceTree = "<group>"; };
 		249794B41E762FB900E63401 /* 002@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "002@2x.png"; sourceTree = "<group>"; };
@@ -137,6 +137,8 @@
 				243D9D721E70031700A978E9 /* LXAttributeStringParser.m */,
 				244BD9B81E7242B300AA3ACD /* LXDealEventManager.h */,
 				244BD9B91E7242B300AA3ACD /* LXDealEventManager.m */,
+				245BCFEA1E7931EB001134F0 /* LXCalculateRectUtils.h */,
+				245BCFEB1E7931EB001134F0 /* LXCalculateRectUtils.m */,
 			);
 			path = class;
 			sourceTree = "<group>";
@@ -187,8 +189,6 @@
 				245BCAE11E6FA1C500D23B28 /* ViewController.m */,
 				245BCB0D1E6FA20300D23B28 /* LXDisplayView.h */,
 				245BCB0E1E6FA20300D23B28 /* LXDisplayView.m */,
-				244BD9C01E72AE5B00AA3ACD /* LXTestView.h */,
-				244BD9C11E72AE5B00AA3ACD /* LXTestView.m */,
 				245BCAE31E6FA1C500D23B28 /* Main.storyboard */,
 				245BCAE61E6FA1C500D23B28 /* Assets.xcassets */,
 				245BCAE81E6FA1C500D23B28 /* LaunchScreen.storyboard */,
@@ -374,8 +374,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				244BD9C21E72AE5B00AA3ACD /* LXTestView.m in Sources */,
 				246FB1401E7783F700135B2A /* UIView+LXExtension.m in Sources */,
+				245BCFEC1E7931EB001134F0 /* LXCalculateRectUtils.m in Sources */,
 				244BD9B61E72404A00AA3ACD /* LXNormalContent.m in Sources */,
 				245BCAE21E6FA1C500D23B28 /* ViewController.m in Sources */,
 				243D9D701E6FD8A200A978E9 /* LXCoretextDataManager.m in Sources */,

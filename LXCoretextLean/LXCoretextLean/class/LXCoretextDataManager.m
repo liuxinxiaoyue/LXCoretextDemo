@@ -58,16 +58,7 @@
                 continue;
             }
             
-            CGRect runBounds;
-            CGFloat ascent;
-            CGFloat descent;
-            runBounds.size.width = CTRunGetTypographicBounds(runRef, CFRangeMake(0, 0), &ascent, &descent, NULL);
-            runBounds.size.height = ascent + descent;
-            
-            CGFloat xOffset = CTLineGetOffsetForStringIndex(lineRef, CTRunGetStringRange(runRef).location, NULL);
-            runBounds.origin.x = lineOrigins[i].x + xOffset;
-            runBounds.origin.y = lineOrigins[i].y;
-            runBounds.origin.y -= descent;
+            CGRect runBounds = [LXCalculateRectUtils getRunBounds:runRef lineRef:lineRef originPoint:lineOrigins[i]];
             
             CGPathRef pathRef = CTFrameGetPath(self.frameRef);
             CGRect colRect = CGPathGetBoundingBox(pathRef);

@@ -81,13 +81,13 @@
             NSDictionary *attDic = (NSDictionary *)CTRunGetAttributes(runRef);
             NSNumber *type = [attDic objectForKey:LXCustomeAttributeType];
             if (type == nil) {
-                // 没有特殊处理
+                // 没有特殊处理 直接绘制
                 CTRunDraw(runRef, contextRef, CFRangeMake(0, 0));
                 continue;
             }
             
             // 计算绘制区域
-            CGRect runBounds = [LXDealEventManager getRunBounds:runRef lineRef:lineRef originPoint:origins[i]];
+            CGRect runBounds = [LXCalculateRectUtils getRunBounds:runRef lineRef:lineRef originPoint:origins[i]];
             
             NSInteger typeValue = type.integerValue;
             if (typeValue == LXAttributeTypeURL) {
@@ -96,7 +96,7 @@
                 NSRange attRange = value.rangeValue;
                 CFRange linkRange = CFRangeMake(attRange.location, attRange.length);
                 
-                // 先绘制背景 后绘制文字
+                // 绘制背景
                 [self drawURLBackground:contextRef runBounds:runBounds linkRange:linkRange runRange:range];
             }
             
@@ -131,36 +131,13 @@
     }
 }
 
-- (void)simpleDraw {
-    // 获取cotext
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    
-    // 翻转坐标系
-    CGContextSetTextMatrix(context, CGAffineTransformIdentity);
-    CGContextTranslateCTM(context, 0, self.height);
-    CGContextScaleCTM(context, 1.0, -1.0);
-    
-    // 创建绘制区域
-    CGMutablePathRef path = CGPathCreateMutable();
-    CGPathAddRect(path, NULL, self.bounds);
-    
-    //
-    NSAttributedString *attrStr = [[NSAttributedString alloc] initWithString:@"hello world"];
-    CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((CFAttributedStringRef)attrStr);
-    CTFrameRef frameRef = CTFramesetterCreateFrame(framesetter, CFRangeMake(0, attrStr.length), path, NULL);
-    
-    //
-    CTFrameDraw(frameRef, context);
-    
-    //
-    CFRelease(frameRef);
-    CFRelease(framesetter);
-    CFRelease(path);
-}
-
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     UITouch *touch = touches.anyObject;
     CGPoint point = [touch locationInView:self];
+    if ([self touchPointInImageArea:point]) {
+        NSLog(@"点击了图片...");
+        return;
+    }
     self.touchPoint = point;
     self.touchPhase = touch.phase;
     self.touchIndex = [LXDealEventManager indexTouchView:self point:point atCoretexDataManager:self.manager];
@@ -171,6 +148,19 @@
     UITouch *touch = touches.anyObject;
     self.touchPhase = touch.phase;
     [self setNeedsDisplay];
+}
+
+- (BOOL)touchPointInImageArea:(CGPoint)point {
+    CGAffineTransform transform = CGAffineTransformMakeTranslation(0, self.height);
+    transform = CGAffineTransformScale(transform, 1, -1);
+    
+    for (LXImageContent *temp in self.manager.imgArray) {
+        CGRect rect = CGRectApplyAffineTransform(temp.imagePosition, transform);
+        if (CGRectContainsPoint(rect, point)) {
+            return true;
+        }
+    }
+    return false;
 }
 
 Boolean CFRangesIntersect(CFRange range, CFRange runRange) {

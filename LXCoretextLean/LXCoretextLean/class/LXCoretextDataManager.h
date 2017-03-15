@@ -11,6 +11,8 @@
 #import <Foundation/Foundation.h>
 #import <CoreText/CoreText.h>
 
+#import "LXCalculateRectUtils.h"
+
 #import "LXTextContent.h"
 #import "LXImageContent.h"
 #import "LXLinkContent.h"

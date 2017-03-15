@@ -9,13 +9,11 @@
 #import "ViewController.h"
 
 #import "LXDisplayView.h"
-#import "LXTestView.h"
 
 #import "LXFrameParser.h"
 
 @interface ViewController ()
 
-@property (weak, nonatomic) IBOutlet LXTestView *testView;
 @property (weak, nonatomic) IBOutlet LXDisplayView *displayView;
 @end
 
@@ -26,11 +24,9 @@
     // Do any additional setup after loading the view, typically from a nib.
     
     LXFrameParsesConfig *config = [[LXFrameParsesConfig alloc] init];
-//    config.fontSize = 15.0;
     config.width = self.displayView.width;
     config.height = self.displayView.height;
-    
-//    config.textColor = [UIColor blackColor];
+
     config.lineSpace = 3.0;
     NSInteger index = 0;
     LXTextContent *t1 = [[LXTextContent alloc] init];
