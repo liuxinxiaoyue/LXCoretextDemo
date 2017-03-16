@@ -1,5 +1,5 @@
 # LXCoretextDemo
-Use CTCoretext draw content
+CoretextDemo 支持链接点击，和图片点击
 
 #LXCoretextDataManager用于管理显示所需要的数据，以及显示内容的实际高度
 
