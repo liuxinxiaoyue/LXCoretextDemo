@@ -13,5 +13,6 @@
 @property (nonatomic, copy) NSString *imageName;
 @property (nonatomic, assign) CGFloat width;
 @property (nonatomic, assign) CGFloat height;
+@property (nonatomic, assign) CGFloat descent;
 @property (nonatomic, assign) CGRect imagePosition;
 @end

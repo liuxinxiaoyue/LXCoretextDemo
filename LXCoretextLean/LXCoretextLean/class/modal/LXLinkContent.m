@@ -10,4 +10,10 @@
 
 @implementation LXLinkContent
 
+- (instancetype)init {
+    if (self = [super init]) {
+        self.textColor = [UIColor blackColor];
+    }
+    return self;
+}
 @end

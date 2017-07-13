@@ -12,6 +12,7 @@ typedef NS_ENUM(NSInteger, LXContentType) {
     LXContentTypeText,     // 文本
     LXContentTypeLinker,   // 链接
     LXContentTypeImage,    // 图片
+    LXContentTypeAt,       // AT
 };
 @interface LXNormalContent : NSObject
 

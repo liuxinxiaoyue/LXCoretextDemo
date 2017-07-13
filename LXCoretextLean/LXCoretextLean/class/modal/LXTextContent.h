@@ -11,7 +11,6 @@
 @interface LXTextContent : LXNormalContent
 
 @property (nonatomic, copy) NSString *text;
-@property (nonatomic, assign) CGFloat fontSize;
 @property (nonatomic, strong) UIColor *textColor;
 @property (nonatomic, copy) NSString *fontFamily;
 @end

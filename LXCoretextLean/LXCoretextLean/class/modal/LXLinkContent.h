@@ -6,12 +6,8 @@
 //  Copyright © 2017年 tang. All rights reserved.
 //
 
-#import "LXNormalContent.h"
+#import "LXTextContent.h"
 
-@interface LXLinkContent : LXNormalContent
+@interface LXLinkContent : LXTextContent
 
-@property (nonatomic, copy) NSString *url;
-@property (nonatomic, strong) UIColor *textColor;
-@property (nonatomic, assign) CGFloat fontSize;
-@property (nonatomic, copy) NSString *fontFamily;
 @end

@@ -7,14 +7,24 @@
 //
 
 #import "ViewController.h"
+#import "LXShowPictureController.h"
+#import "LXTransition.h"
 
-#import "LXDisplayView.h"
+#import "LXShowTableViewCell.h"
 
-#import "LXFrameParser.h"
+#import "MJExtension.h"
+#import "LXShowModel.h"
+#import "LXViewModel.h"
+#import "LXLabel.h"
 
-@interface ViewController ()
+@interface ViewController ()<UITableViewDelegate, UITableViewDataSource, LXShowTableViewCellDelegate>
 
-@property (weak, nonatomic) IBOutlet LXDisplayView *displayView;
+@property (nonatomic, strong) NSArray<LXViewModel *> *items;
+@property (nonatomic, weak) UITableView *tableView;
+@property (nonatomic, assign) BOOL tableViewScrolling;
+@property (nonatomic, strong) UIView *playView;
+@property (nonatomic, strong) UIProgressView *progressView;
+@property (nonatomic, assign) BOOL scrolling;
 @end
 
 @implementation ViewController
@@ -23,75 +33,32 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
-    LXFrameParsesConfig *config = [[LXFrameParsesConfig alloc] init];
-    config.width = self.displayView.width;
-    config.height = self.displayView.height;
-
-    config.lineSpace = 3.0;
-    NSInteger index = 0;
-    LXTextContent *t1 = [[LXTextContent alloc] init];
-    t1.text = @"1.一个显示用的类，仅负责显示内容，不负责排版\n";
-    t1.range = NSMakeRange(0, t1.text.length - 1);
-    t1.textColor = [UIColor orangeColor];
-    t1.fontSize = 15.0;
-    t1.contentType = LXContentTypeText;
-    index += t1.text.length;
+    // 获取数据 --> 解析成模型  --> 计算高度  --> draw
+    // 存入数据库
     
-    LXImageContent *t2 = [[LXImageContent alloc] init];
-    t2.imageName = @"a.jpg";
-    t2.width = 200;
-    t2.height = 150;
-    t2.range = NSMakeRange(index, 1);
-    t2.contentType = LXContentTypeImage;
-    index += 1;
+    NSMutableArray *datas = [NSMutableArray array];
+    NSURL *url = [[NSBundle mainBundle] URLForResource:@"data.json" withExtension:nil];
+    NSData *data = [NSData dataWithContentsOfURL:url];
+    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+    NSArray *items = dic[@"data"];
+    [items enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        LXShowModel *temp = [LXShowModel mj_objectWithKeyValues:obj];
+        LXViewModel *viewModel = [[LXViewModel alloc] init];
+        viewModel.showModel = temp;
+        [datas addObject:viewModel];
+    }];
+    self.items = [datas copy];
     
-    LXTextContent *t3 = [[LXTextContent alloc] init];
-    t3.text = @"2.一个模型类，用于承载显示所需要的所有数据\n";
-    t3.range = NSMakeRange(index, t3.text.length - 1);
-    t3.textColor = [UIColor blackColor];
-    t3.fontSize = 12.0;
-    t3.contentType = LXContentTypeText;
-    index += t3.text.length;
+    CGRect frame = self.view.bounds;
     
-    LXTextContent *t4 = [[LXTextContent alloc] init];
-    t4.text = @"3.一个显示用的类，仅负责显示内容，不负责排版\n";
-    t4.range = NSMakeRange(index, t4.text.length - 1);
-    t4.textColor = [UIColor purpleColor];
-    t4.fontSize = 13.0;
-    t4.contentType = LXContentTypeText;
-    index += t4.text.length;
+    UITableView *tableView = [[UITableView alloc] initWithFrame:frame style:UITableViewStylePlain];
+    tableView.delegate = self;
+    tableView.dataSource = self;
+    tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    [tableView registerClass:[LXShowTableViewCell class] forCellReuseIdentifier:@"reuse"];
+    [self.view addSubview:tableView];
+    self.tableView = tableView;
     
-    LXTextContent *t5 = [[LXTextContent alloc] init];
-    t5.text = @"4.一个显示用的类，仅负责显示";
-    t5.range = NSMakeRange(index, t5.text.length - 1);
-    t5.textColor = [UIColor redColor];
-    t5.fontSize = 14.0;
-    t5.contentType = LXContentTypeText;
-    index += t5.text.length;
-    
-    LXLinkContent *t6 = [[LXLinkContent alloc] init];
-    t6.url = @"www.baidu.com";
-    t6.textColor = [UIColor blueColor];
-    t6.contentType = LXContentTypeLinker;
-    t6.fontSize = 18.0;
-    t6.range = NSMakeRange(index, t6.url.length - 1);
-    index += t6.url.length;
-    
-    LXImageContent *t7 = [[LXImageContent alloc] init];
-    t7.range = NSMakeRange(index, 1);
-    t7.contentType = LXContentTypeImage;
-    t7.width = 24.0;
-    t7.height = 24.0;
-    t7.imageName = @"002@2x.png";
-    
-    NSArray *contents = @[t1, t2, t3, t4, t5, t6, t7];
-    
-    NSAttributedString *attr = [LXAttributeStringParser attributeStringWith:contents config:config];
-    LXCoretextDataManager *manager = [LXFrameParser parserAttributString:attr withConfig:config];
-    manager.imgArray = @[t2, t7];
-    manager.linkArray = @[t6];
-    self.displayView.manager = manager;
-//    self.displayView.height = manager.height;
 }
 
 
@@ -100,4 +67,103 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - UITableViewDataSource
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return self.items.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+
+    LXShowTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"reuse"];
+    // Configure the cell...
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    LXViewModel *model = self.items[indexPath.row];
+    [cell configWithViewModel:model];
+    cell.delegate = self;
+    return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    LXViewModel *model = self.items[indexPath.row];
+    return model.totalHeight;
+}
+
+#pragma mark - UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+}
+
+// 看不见cell时调用
+- (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    NSLog(@"%s, indexPath.row %ld", __func__, indexPath.row);
+    LXViewModel *viewModel = self.items[indexPath.row];
+    if (viewModel.showModel.contentType == LXShowModelTypeVideo) {
+        LXShowModelResource *resource = viewModel.showModel.resources.firstObject;
+        NSURL *url = [NSURL URLWithString:resource.videoUrl];
+        LXShowTableViewCell *showCell = (LXShowTableViewCell *)cell;
+        [showCell.playerView pauseVideoWithURL:url];
+    }
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    NSLog(@"%s", __func__);
+    self.scrolling = false;
+    CGFloat deviceHeight = CGRectGetHeight([UIScreen mainScreen].bounds);
+    CGFloat contentOffsetY = scrollView.contentOffset.y;
+    CGFloat minShowVideoOffsetY = contentOffsetY + 100;
+    CGFloat maxShowVideoOffsetY = contentOffsetY + deviceHeight - 100;
+    
+    NSArray *visibleIndexPathes = [self.tableView indexPathsForVisibleRows];
+    @weakObj(self);
+    [visibleIndexPathes enumerateObjectsUsingBlock:^(NSIndexPath *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        @strongObj(self);
+        LXViewModel *viewModel = self.items[obj.row];
+        if (viewModel.showModel.contentType == LXShowModelTypeVideo) {
+            LXShowTableViewCell *cell = [self.tableView cellForRowAtIndexPath:obj];
+            CGRect frame = cell.frame;
+            if (CGRectGetMinY(frame) >= minShowVideoOffsetY && CGRectGetMaxY(frame) <= maxShowVideoOffsetY) {
+                
+                LXShowModelResource *resource = viewModel.showModel.resources.firstObject;
+                [cell.playerView playVideoWithURL:[NSURL URLWithString:resource.videoUrl]];
+            }
+        }
+    }];
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    NSLog(@"%s", __func__);
+    self.scrolling = true;
+}
+
+#pragma mark - LXShowTableViewCellDelegate
+- (void)showCell:(LXShowTableViewCell *)cell tapImageView:(UIImageView *)imageView {
+//    CGRect frame = [self.view convertRect:imageView.frame fromView:cell.imgsView];
+    CGRect frame = [cell.imgsView convertRect:imageView.frame toView:self.view];
+    LXShowPictureController *pictrueVC = [[LXShowPictureController alloc] init];
+    pictrueVC.paddingX = 10;
+    pictrueVC.paddingY = 10;
+    pictrueVC.currentFrame = frame;
+    pictrueVC.showIndex = imageView.tag;
+    pictrueVC.items = [cell.model.showModel.resources copy];
+    
+    pictrueVC.modalPresentationStyle = UIModalPresentationCustom;
+    LXTransition *transition = [LXTransition shareTransition];
+    transition.originFrame = frame;
+    pictrueVC.transitioningDelegate = transition;
+    
+    [self presentViewController:pictrueVC animated:true completion:nil];
+}
+
+- (NSArray *)items {
+    if (nil == _items) {
+        _items = [NSArray array];
+    }
+    return _items;
+}
 @end
